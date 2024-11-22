@@ -87,6 +87,7 @@
                       >
                         メールアドレスを入力してください
                       </label>
+                      <label th:if="${errorMail != null}" th:text="既にこのアドレスは使われています" class="error-messages"></label>
                       <input
                         type="text"
                         name="mailAddress"
@@ -96,6 +97,7 @@
                         th:field="*{mailAddress}"
                         th:errorclass="error-input"
                         value="yamada@mail.com"
+                        th:value="${errorMail}"
                       />
                     </div>
                   </div>

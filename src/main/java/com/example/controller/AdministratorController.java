@@ -3,6 +3,7 @@ package com.example.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,7 +77,8 @@ public class AdministratorController {
 	@PostMapping("/insert")
 	public String insert(
 		@Validated InsertAdministratorForm form
-		, BindingResult result) {
+		, BindingResult result
+		, Model model) {
 
 		if (result.hasErrors()) {
 			return toInsert();
@@ -85,8 +87,13 @@ public class AdministratorController {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
-		administratorService.insert(administrator);
-		return "redirect:/";
+		if (administratorService.findByMailAddress(administrator.getMailAddress()) == null) {
+			administratorService.insert(administrator);
+			return "redirect:/";
+		} else {
+			model.addAttribute("errorMail", administrator.getMailAddress());
+			return "administrator/insert";
+		}
 	}
 
 	/////////////////////////////////////////////////////
