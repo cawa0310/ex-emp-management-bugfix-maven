@@ -77,7 +77,8 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
-		return "employee/list";
+		// return "employee/list";
+		return "redirect:/";
 	}
 
 	/////////////////////////////////////////////////////
@@ -122,5 +123,4 @@ public class AdministratorController {
 		session.invalidate();
 		return "redirect:/";
 	}
-
 }

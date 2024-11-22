@@ -43,5 +43,4 @@ public class InsertAdministratorForm {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
 				+ "]";
 	}
-
 }
