@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import java.lang.reflect.Field;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -91,8 +94,9 @@ public class AdministratorController {
 			administratorService.insert(administrator);
 			return "redirect:/";
 		} else {
-			model.addAttribute("errorMail", administrator.getMailAddress());
-			return "administrator/insert";
+			FieldError error = new FieldError(result.getObjectName(), "mailAddress", form.getMailAddress(), false, null, null, "既にこのアドレスは使われています");
+			result.addError(error);
+			return toInsert();
 		}
 	}
 
