@@ -88,14 +88,21 @@ public class AdministratorController {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
-		if (administratorService.findByMailAddress(administrator.getMailAddress()) == null) {
-			administratorService.insert(administrator);
-			return "redirect:/";
-		} else {
-			FieldError error = new FieldError(result.getObjectName(), "mailAddress", form.getMailAddress(), false, null, null, "既にこのアドレスは使われています");
-			result.addError(error);
-			return toInsert();
-		}
+		// if (form.getMailAddress() == form.getCheckAddress()) {
+			if (administratorService.findByMailAddress(administrator.getMailAddress()) == null) {
+				if (form.getPassword() == form.getCheckPass()) {
+					administratorService.insert(administrator);
+					return "redirect:/";
+				} else {
+					FieldError error = new FieldError(result.getObjectName(), "checkPass", form.getCheckPass(), false, null, null, "パスワードが一致していません");
+					result.addError(error);
+					return toInsert();
+				}
+			} else {
+				FieldError error = new FieldError(result.getObjectName(), "mailAddress", form.getMailAddress(), false, null, null, "既にこのアドレスは使われています");
+				result.addError(error);
+				return toInsert();
+			}
 	}
 
 	/////////////////////////////////////////////////////
