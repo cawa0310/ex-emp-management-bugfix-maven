@@ -1,5 +1,6 @@
 package com.example.form;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,13 @@ public class InsertAdministratorForm {
 	/** パスワード */
 	@Size(min=1, max=20, message="パスワードを20文字以内で入力してください")
 	private String password;
+	/* 確認用パスワード */
+	private String checkPass;
+	
+	@AssertTrue(message="パスワードが一致しません")
+	public boolean isPasswordValid() {
+		return password != null && password.equals(checkPass);
+	}
 
 	public String getName() {
 		return name;
@@ -46,20 +54,17 @@ public class InsertAdministratorForm {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ ", checkPass=" + checkPass + "]";
-	}
-
-	/* 確認用パスワード */
-	private String checkPass;
-
 	public String getCheckPass() {
 		return checkPass;
 	}
 
 	public void setCheckPass(String checkPass) {
 		this.checkPass = checkPass;
+	}
+
+	@Override
+	public String toString() {
+		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
+				+ ", checkPass=" + checkPass + "]";
 	}
 }

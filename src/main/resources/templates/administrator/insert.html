@@ -130,7 +130,8 @@
                     <div class="col-sm-12">
                       <label for="checkPass"> 確認用パスワード: </label>
                       <label
-                        th:errors="*{checkPass}"
+                        th:if="${#fields.hasErrors('passwordValid')}"
+                        th:errors="*{passwordValid}"
                         class="error-messages"
                       >
                         パスワードを入力してください
