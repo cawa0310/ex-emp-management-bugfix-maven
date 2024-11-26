@@ -98,6 +98,16 @@
 
           <!-- ここにモックのtable要素を貼り付けます -->
 
+          <form th:action="@{/employee/showLNList}" method="post">
+            <input
+              type="text"
+              name="name"
+              placeholder="従業員名"
+              th:value="${formName}"
+            >
+            <button type="submit">検索</button>
+            <span th:if="${errorName != null}" th:text="１件もありませんでした"></span>
+          </form>
           <table class="table table-striped">
             <thead>
               <tr>

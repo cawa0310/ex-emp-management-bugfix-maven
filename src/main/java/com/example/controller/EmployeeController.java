@@ -56,6 +56,34 @@ public class EmployeeController {
 	}
 
 	/////////////////////////////////////////////////////
+	// ユースケース：名前のあいまい検索結果と一致する従業員一覧を表示する
+	/////////////////////////////////////////////////////
+	/**
+	 * 名前のあいまい検索結果の従業員一覧画面を出力します.
+	 * 
+	 * @param model モデル
+	 * @return 名前のあいまい検索後の従業員一覧画面
+	 */
+	@RequestMapping("/showLNList")
+	public String showLNList(String name, Model model) {
+		List<Employee> employeeList;
+		if (name == null) {
+			employeeList = employeeService.showList();
+		}else {
+			List<Employee> employeeList2 = employeeService.findByLikeName(name);
+			if (employeeList2 == null) {
+				employeeList = employeeService.showList();
+				model.addAttribute("errorName", name);
+			} else {
+				employeeList = employeeList2;
+			}
+		}
+		model.addAttribute("formName", name);
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
+
+	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を表示する
 	/////////////////////////////////////////////////////
 	/**
