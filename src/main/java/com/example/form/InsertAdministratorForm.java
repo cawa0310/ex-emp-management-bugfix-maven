@@ -1,5 +1,8 @@
 package com.example.form;
 
+import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,6 +26,11 @@ public class InsertAdministratorForm {
 	private String password;
 	/* 確認用パスワード */
 	private String checkPass;
+	
+	@AssertTrue(message="パスワードが一致しません")
+	public boolean isPasswordValid() {
+		return password != null && password.equals(checkPass);
+	}
 
 	public String getName() {
 		return name;
