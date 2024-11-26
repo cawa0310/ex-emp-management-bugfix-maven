@@ -49,6 +49,17 @@ public class InsertAdministratorForm {
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", checkPass=" + checkPass + "]";
+	}
+
+	/* 確認用パスワード */
+	private String checkPass;
+
+	public String getCheckPass() {
+		return checkPass;
+	}
+
+	public void setCheckPass(String checkPass) {
+		this.checkPass = checkPass;
 	}
 }
