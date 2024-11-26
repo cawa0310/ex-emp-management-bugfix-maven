@@ -58,6 +58,23 @@ public class EmployeeRepository {
 	}
 
 	/**
+	 * 従業員一覧情報を名前のあいまい検索で取得します.
+	 * 
+	 * @param name
+	 * @return 名前のあいまい検索と一致するemployeeのlist
+	 */
+	public List<Employee> findByLikeName(String name) {
+		String sql = "select id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name like :name;";
+		SqlParameterSource param = new MapSqlParameterSource()
+				.addValue("name", "%" + name + "%");
+		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
+		if (employeeList.size() == 0) {
+			return null;
+		}
+		return employeeList;
+	}
+
+	/**
 	 * 主キーから従業員情報を取得します.
 	 * 
 	 * @param id 検索したい従業員ID
